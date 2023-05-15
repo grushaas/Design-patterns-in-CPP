@@ -14,9 +14,9 @@ public:
 class SqlSelectQueryBuilder
 {
 public:
-	SqlSelectQueryBuilder& AddColumn(const std::string column);
+	SqlSelectQueryBuilder& AddColumn(const std::vector<std::string>& columns) noexcept;
 	SqlSelectQueryBuilder& AddFrom(const std::string table);
-	SqlSelectQueryBuilder& AddWhere(const std::string key, const std::string value);
+	SqlSelectQueryBuilder& AddWhere(const std::map<std::string, std::string>& kv) noexcept;
 	std::string BuildQuery();
 
 private:

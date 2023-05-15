@@ -3,9 +3,9 @@
 
 using namespace std;
 
-SqlSelectQueryBuilder& SqlSelectQueryBuilder::AddColumn(const string column)
+SqlSelectQueryBuilder& SqlSelectQueryBuilder::AddColumn(const std::vector<std::string>& columns) noexcept
 {
-	db.columns.push_back(column);
+	db.columns = columns;
 	return *this;
 }
 
@@ -15,9 +15,10 @@ SqlSelectQueryBuilder& SqlSelectQueryBuilder::AddFrom(const string table)
 	return *this;
 }
 
-SqlSelectQueryBuilder& SqlSelectQueryBuilder::AddWhere(const string key, const string value)
+SqlSelectQueryBuilder& SqlSelectQueryBuilder::AddWhere(const std::map<std::string, std::string>& kv) noexcept
 {
-	db.terms[key] = value;
+	
+	db.terms = kv;
 	return *this;
 }
 
@@ -30,12 +31,12 @@ string SqlSelectQueryBuilder::BuildQuery()
 	{
 		query += "* ";
 	}
-	else if(db.columns.size() > 1)
+	else 
 	{
 		const int size = db.columns.size();
-		for (int i = 0; i < size; ++i)
+		for(int i = 0; i < db.columns.size(); ++i)
 		{
-			if (i == size - 1)
+			if(i == size - 1)
 			{
 				query += db.columns[i] + " ";
 			}
@@ -44,10 +45,6 @@ string SqlSelectQueryBuilder::BuildQuery()
 				query += db.columns[i] + ", ";
 			}
 		}
-	}
-	else
-	{
-		query += db.columns[0] + " ";
 	}
 
 	//Table
