@@ -432,3 +432,6 @@ FodyWeavers.xsd
 
 # Cmake
 build
+
+#VScode
+.vscode
